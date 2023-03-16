@@ -1,8 +1,7 @@
 ### React starter by Tojonirina Andrianarijaona
 
-# `yarn start`
-
-To run project, http://localhost:3000
+React starter with common configuration. usefull configurations are already implemented and configured
+in order to go straight away to the main development.
 
 ## Include
 
@@ -11,8 +10,14 @@ To run project, http://localhost:3000
     - Redux configuration
     - tailwindcss configuration
 
-### Environment setup
+## Environment setup
 
     git clone --single-branch -b react-starter git@github.com:tojonir/starter.git
     yarn install
     yarn start
+
+## command
+
+    yarn start : to run project,http://localhost:3000
+    yarn build :  to build to production
+    yarn test :  for testing
