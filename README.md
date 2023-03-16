@@ -13,6 +13,6 @@ To run project, http://localhost:3000
 
 ### Environment setup
 
-    git clone --single-branch -b react git@github.com:tojonir/starter.git
+    git clone --single-branch -b react-starter git@github.com:tojonir/starter.git
     yarn install
     yarn start
