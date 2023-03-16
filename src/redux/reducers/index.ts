@@ -1,5 +1,11 @@
 import { AnyAction } from "@reduxjs/toolkit";
-import { addColumn, removeColumn, updateColumn } from "@utils/constant";
+import {
+  addColumn,
+  addRow,
+  removeColumn,
+  removeRow,
+  updateColumn,
+} from "@utils/constant";
 
 export const appReducer = (
   state: string = "Welcome to react starter by tojonirina",
@@ -33,6 +39,18 @@ export const columnReducer = (
         return col;
       });
       return updatedData;
+
+    default:
+      return state;
+  }
+};
+
+export const rowReducer = (state: any = [], action: AnyAction) => {
+  switch (action.type) {
+    case addRow:
+      return [...state, { ...action.data, id: action.id }];
+    case removeRow:
+      return [...state.filter((c: any) => c.id !== action.id)];
 
     default:
       return state;

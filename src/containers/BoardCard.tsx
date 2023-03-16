@@ -1,8 +1,11 @@
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { addRowAction } from "@redux/actions";
+import { useAppDispatch } from "@utils/hooks";
 import { FC, ReactNode } from "react";
 
 interface BoardCardProps {
+  id: string;
   children: ReactNode;
   value: string;
   onDelete: () => void;
@@ -10,13 +13,15 @@ interface BoardCardProps {
 }
 
 const BoardCard: FC<BoardCardProps> = ({
+  id,
   value,
   onDelete,
   onUpdate,
   children,
 }) => {
+  const dispatch = useAppDispatch();
   return (
-    <div className="bg-gray-100 rounded-[3px] w-[250px] p-2 mr-3" id={value}>
+    <div className="bg-gray-100 rounded-[3px] w-[250px] p-2 mr-3 h-fit" id={id}>
       <div className="border-b pb-2 flex justify-between items-center group">
         <input
           className="font-medium outline-none capitalize bg-transparent"
@@ -35,6 +40,9 @@ const BoardCard: FC<BoardCardProps> = ({
         <FontAwesomeIcon
           icon={solid("add")}
           className="text-gray-400 cursor-pointer"
+          onClick={() =>
+            dispatch(addRowAction({ title: "New Item", status: id }))
+          }
         />
       </div>
     </div>

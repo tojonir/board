@@ -1,4 +1,11 @@
-import { addColumn, removeColumn, updateColumn } from "@utils/constant";
+import {
+  addColumn,
+  addRow,
+  removeColumn,
+  removeRow,
+  updateColumn,
+  updateRow,
+} from "@utils/constant";
 
 export const addColumnAction = (title: string) => ({
   type: addColumn,
@@ -15,4 +22,21 @@ export const updateColumnAction = (id: string, title: string) => ({
   type: updateColumn,
   id,
   title,
+});
+
+export const addRowAction = (data: any) => ({
+  type: addRow,
+  id: Math.random().toString(36).substr(2, 9),
+  data,
+});
+
+export const removeRowAction = (id: string) => ({
+  type: removeRow,
+  id,
+});
+
+export const updateRowAction = (id: string, data: any) => ({
+  type: updateRow,
+  id,
+  data,
 });

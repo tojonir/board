@@ -1,6 +1,11 @@
 import { FC, useRef, useState } from "react";
 
-const BoardCardItem: FC = () => {
+interface BoardCardItemProps {
+  id: string;
+  title: string;
+}
+
+const BoardCardItem: FC<BoardCardItemProps> = ({ id, title }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [mouseMove, setMouseMove] = useState<{ x: number; y: number }>({
     x: 0,
@@ -53,7 +58,7 @@ const BoardCardItem: FC = () => {
       onDragEnd={(e) => e.preventDefault()}
       onDragStart={(e) => e.preventDefault()}
     >
-      <div className="pointer-events-none">Item 1</div>
+      <div className="pointer-events-none">{title}</div>
     </div>
   );
 };

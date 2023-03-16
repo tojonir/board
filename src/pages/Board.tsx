@@ -20,6 +20,7 @@ interface columnSchema {
 
 const Board: FC = () => {
   const column = useAppSelector((state) => state.column);
+  const row = useAppSelector((state) => state.row);
   const dispatch = useAppDispatch();
   return (
     <Layout>
@@ -31,14 +32,19 @@ const Board: FC = () => {
           {column.map((col, i) => (
             <BoardCard
               key={i}
+              id={col.id}
               value={column[i].title}
               onUpdate={(value) => {
                 dispatch(updateColumnAction(col.id, value));
               }}
               onDelete={() => dispatch(removeColumnAction(col.id))}
             >
-              <BoardCardItem />
-              <BoardCardItem />
+              {row.map(
+                (r: any) =>
+                  r.status === col.id && (
+                    <BoardCardItem id={r.id} title={r.title} />
+                  )
+              )}
             </BoardCard>
           ))}
 
