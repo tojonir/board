@@ -13,7 +13,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       style={{ backgroundImage: `url(${bg})` }}
     >
       <Navigation />
-      <div>{children}</div>
+      <div className="h-[calc(100vh-50px)]">{children}</div>
     </main>
   );
 };
