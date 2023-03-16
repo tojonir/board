@@ -42,7 +42,12 @@ const Board: FC = () => {
               {row.map(
                 (r: any) =>
                   r.status === col.id && (
-                    <BoardCardItem id={r.id} title={r.title} status={col.id} />
+                    <BoardCardItem
+                      key={r.id}
+                      id={r.id}
+                      title={r.title}
+                      status={col.id}
+                    />
                   )
               )}
             </BoardCard>
