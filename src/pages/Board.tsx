@@ -3,7 +3,15 @@ import BoardCardItem from "@containers/BoardCardItem";
 import Layout from "@containers/Layout";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  addColumnAction,
+  removeColumnAction,
+  updateColumnAction,
+} from "@redux/actions";
+import { useAppDispatch, useAppSelector } from "@utils/hooks";
 import { FC, useState } from "react";
+
+interface BoardProps {}
 
 interface columnSchema {
   id: number;
@@ -11,7 +19,8 @@ interface columnSchema {
 }
 
 const Board: FC = () => {
-  const [column, setColumn] = useState<columnSchema[]>([]);
+  const column = useAppSelector((state) => state.column);
+  const dispatch = useAppDispatch();
   return (
     <Layout>
       <div className="w-full h-full overflow-auto p-5 grid auto-rows-max gap-4">
@@ -24,13 +33,9 @@ const Board: FC = () => {
               key={i}
               value={column[i].title}
               onUpdate={(value) => {
-                const newColumn = [...column];
-                newColumn[i].title = value;
-                setColumn(newColumn);
+                dispatch(updateColumnAction(col.id, value));
               }}
-              onDelete={() =>
-                setColumn([...column.filter((c) => c.id !== col.id)])
-              }
+              onDelete={() => dispatch(removeColumnAction(col.id))}
             >
               <BoardCardItem />
               <BoardCardItem />
@@ -40,9 +45,7 @@ const Board: FC = () => {
           <div className="bg-white rounded-[3px] w-[50px] h-fit overflow-hidden">
             <div
               className="w-full h-[50px] flex items-center justify-center cursor-pointer hover:bg-gray-100"
-              onClick={() =>
-                setColumn([...column, { id: column.length, title: "" }])
-              }
+              onClick={() => dispatch(addColumnAction(""))}
             >
               <FontAwesomeIcon icon={solid("add")} />
             </div>
