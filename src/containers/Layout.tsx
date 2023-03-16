@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
 import Navigation from "./Navigation";
+import bg from "@assets/space.jpg";
 
 interface LayoutProps {
   children: ReactNode;
@@ -7,7 +8,10 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <main>
+    <main
+      className="w-screen h-screen bg-no-repeat bg-cover"
+      style={{ backgroundImage: `url(${bg})` }}
+    >
       <Navigation />
       <div>{children}</div>
     </main>
