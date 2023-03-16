@@ -1,11 +1,14 @@
+import { updateRowAction } from "@redux/actions";
+import { useAppDispatch } from "@utils/hooks";
 import { FC, useRef, useState } from "react";
 
 interface BoardCardItemProps {
   id: string;
   title: string;
+  status: string;
 }
 
-const BoardCardItem: FC<BoardCardItemProps> = ({ id, title }) => {
+const BoardCardItem: FC<BoardCardItemProps> = ({ id, title, status }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [mouseMove, setMouseMove] = useState<{ x: number; y: number }>({
     x: 0,
@@ -16,6 +19,7 @@ const BoardCardItem: FC<BoardCardItemProps> = ({ id, title }) => {
     y: 0,
   });
   const [canDrag, setCanDrag] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   window.onmousemove = (e) => {
     setMouseMove({ x: e.clientX, y: e.clientY });
@@ -29,13 +33,16 @@ const BoardCardItem: FC<BoardCardItemProps> = ({ id, title }) => {
   const mouseup = (e: any) => {
     let doc = document.elementsFromPoint(e.clientX, e.clientY);
     doc = doc.filter((d) => d.id !== "" && d.id !== "root");
-    const item = cardRef.current;
-    if (item) {
-      item.style.position = "relative";
-      item.style.top = "0px";
-      item.style.left = "0px";
+    if (doc[0] && doc[0].id !== "" && doc[0].id !== status) {
+      dispatch(updateRowAction(id, { status: doc[0].id }));
+    } else {
+      const item = cardRef.current;
+      if (item) {
+        item.style.position = "relative";
+        item.style.top = "0px";
+        item.style.left = "0px";
+      }
     }
-    console.log(cardRef.current?.parentElement);
     setCanDrag(false);
   };
   return (

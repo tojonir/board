@@ -5,6 +5,7 @@ import {
   removeColumn,
   removeRow,
   updateColumn,
+  updateRow,
 } from "@utils/constant";
 
 export const appReducer = (
@@ -51,6 +52,14 @@ export const rowReducer = (state: any = [], action: AnyAction) => {
       return [...state, { ...action.data, id: action.id }];
     case removeRow:
       return [...state.filter((c: any) => c.id !== action.id)];
+    case updateRow:
+      const updatedData = state.map((row: any) => {
+        if (row.id === action.id) {
+          return { ...row, ...action.data };
+        }
+        return row;
+      });
+      return updatedData;
 
     default:
       return state;
