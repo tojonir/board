@@ -2,7 +2,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addRowAction } from "@redux/actions";
 import { useAppDispatch } from "@utils/hooks";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useRef, useState } from "react";
 
 interface BoardCardProps {
   id: string;
@@ -19,15 +19,20 @@ const BoardCard: FC<BoardCardProps> = ({
   onUpdate,
   children,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [currentValue, setCurrentValue] = useState<string>(value);
   const dispatch = useAppDispatch();
   return (
     <div className="bg-gray-100 rounded-[3px] w-[250px] p-2 mr-3 h-fit" id={id}>
       <div className="border-b pb-2 flex justify-between items-center group">
         <input
-          className="font-medium outline-none capitalize bg-transparent"
+          ref={inputRef}
+          className="font-medium outline-none capitalize bg-transparent focus:text-blue-500"
           placeholder="Title"
-          value={value}
-          onChange={(e) => onUpdate(e.target.value.toLowerCase())}
+          value={currentValue}
+          onChange={(e) => setCurrentValue(e.target.value.toLowerCase())}
+          onKeyDown={(e) => e.key === "Enter" && inputRef.current?.blur()}
+          onBlur={() => value !== currentValue && onUpdate(currentValue)}
         />
         <FontAwesomeIcon
           icon={solid("trash")}
