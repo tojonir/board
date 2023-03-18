@@ -1,5 +1,6 @@
+import Avatar from "@components/Avatar";
 import Modal from "@components/Modal";
-import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { regular, solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { updateRowAction } from "@redux/actions";
 import { useAppDispatch } from "@utils/hooks";
@@ -82,7 +83,43 @@ const BoardCardItem: FC<BoardCardItemProps> = ({ id, title, status }) => {
       </div>
       {showModal && (
         <Modal close={() => setShowModal(false)}>
-          <div></div>
+          <div className="bg-white w-3/4 h-2/3 shadow-md rounded-[3px] overflow-hidden flex">
+            <div className="grow flex flex-col p-2">
+              <div className="flex flex-col border-b">
+                <input placeholder="Title" />
+                <textarea placeholder="desciption" />
+              </div>
+              <div className="h-full"></div>
+              <div className="border-t">
+                <div className="flex items-center py-2">
+                  <input
+                    className="outline-none w-full"
+                    placeholder="comment"
+                  />
+                  <FontAwesomeIcon
+                    icon={solid("image")}
+                    className="text-gray-400"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-200 w-1/3 p-4 flex flex-col justify-between">
+              <div>
+                <select className="w-full bg-transparent outline-none mb-2">
+                  <option>In progress</option>
+                </select>
+                <div className="py-2 px-1 border-t border-t-gray-300 text-[14px]">
+                  <p>Created on: 12/02/23</p>
+                  <p>Last modified on: 12/02/23</p>
+                  <p>Created by: tojonirina</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-blue-400">Assign to:</span>
+                <Avatar label={false} />
+              </div>
+            </div>
+          </div>
         </Modal>
       )}
     </>
