@@ -32,12 +32,12 @@ const Navigation: FC = () => {
       <h1 className="font-semibold">Board</h1>
       <div className="h-full flex justify-between items-center w-2/3">
         <Link to="/">Home</Link>
-        <Link to="/">Project</Link>
-        <Link to="/">Activity</Link>
+        <Link to="/">App</Link>
+        <Link to="/">Team</Link>
         <Search />
         <Avatar onClick={() => setShow(!show)} />
         {show && (
-          <div className="bg-white rounded-[3px] p-3 absolute top-full right-0 w-[250px] text-gray-600">
+          <div className="bg-white shadow-md border rounded-[3px] p-3 absolute top-full right-0 w-[250px] text-gray-600">
             <Avatar large />
             <div className="border-t mt-2">
               {menu.map((item, i) => (
