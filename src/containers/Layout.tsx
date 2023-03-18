@@ -8,10 +8,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <main
-      className="w-screen h-screen bg-no-repeat bg-cover overflow-hidden"
-      style={{ backgroundImage: `url(${bg})` }}
-    >
+    <main className="w-screen h-screen bg-no-repeat bg-cover overflow-hidden">
       <Navigation />
       <div className="h-[calc(100vh-50px)]">{children}</div>
     </main>
