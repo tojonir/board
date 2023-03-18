@@ -27,11 +27,11 @@ const Navigation: FC = () => {
     },
   ];
   return (
-    <nav className="h-[50px] backdrop-blur-md bg-white/30 flex justify-between items-center px-5 text-white relative">
+    <nav className="h-[50px] border-b flex justify-between items-center px-5 text-gray-600 shadow-sm relative">
       <h1 className="font-semibold">Board</h1>
       <div className="h-full flex justify-between items-center w-1/2">
         <Link to="/">Home</Link>
-        <Link to="/">Calendar</Link>
+        <Link to="/">Project</Link>
         <Link to="/">Activity</Link>
         <Avatar onClick={() => setShow(!show)} />
         {show && (
