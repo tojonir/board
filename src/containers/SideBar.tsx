@@ -44,6 +44,7 @@ const SideBar: FC<SideBarProps> = () => {
       <div className="p-1 mt-3 text-gray-600">
         {menu.map((m) => (
           <Link
+            key={m.title}
             to={`./${m.title}`}
             className="flex items-center hover:bg-gray-100 rounded-[3px] p-1 py-2"
           >
