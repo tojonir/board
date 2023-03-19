@@ -13,7 +13,10 @@ const Routes: FC = () => {
       <Route path="/project" element={<Project />} />
       <Route path="/login" element={<Auth />} />
       <Route path="/signup" element={<Auth />} />
-      <Route path="/workspace" element={<Workspace />} />
+      <Route path="/workspace">
+        <Route path="" element={<Workspace />} />
+        <Route path="manage" element={<Workspace manage />} />
+      </Route>
       <Route path="/board" element={<Board />} />
     </Router>
   );

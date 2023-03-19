@@ -32,7 +32,8 @@ const Navigation: FC = () => {
       <h1 className="font-semibold">Board</h1>
       <div className="h-full flex justify-between items-center w-2/3">
         <Link to="/">Home</Link>
-        <Link to="/">App</Link>
+        <Link to="/workspace/manage">Workspace</Link>
+        <Link to="/">Project</Link>
         <Link to="/">Team</Link>
         <Search />
         <Avatar onClick={() => setShow(!show)} />
