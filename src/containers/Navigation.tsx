@@ -1,4 +1,5 @@
 import Avatar from "@components/Avatar";
+import Search from "@components/Search";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,15 +28,17 @@ const Navigation: FC = () => {
     },
   ];
   return (
-    <nav className="h-[50px] backdrop-blur-md bg-white/30 flex justify-between items-center px-5 text-white relative">
+    <nav className="h-[50px] border-b flex justify-between items-center px-5 text-gray-600 shadow-sm relative">
       <h1 className="font-semibold">Board</h1>
-      <div className="h-full flex justify-between items-center w-1/2">
+      <div className="h-full flex justify-between items-center w-2/3">
         <Link to="/">Home</Link>
-        <Link to="/">Calendar</Link>
-        <Link to="/">Activity</Link>
+        <Link to="/workspace/manage">Workspace</Link>
+        <Link to="/">Project</Link>
+        <Link to="/">Team</Link>
+        <Search />
         <Avatar onClick={() => setShow(!show)} />
         {show && (
-          <div className="bg-white rounded-[3px] p-3 absolute top-full right-0 w-[250px] text-gray-600">
+          <div className="bg-white shadow-md border rounded-[3px] p-3 absolute top-full right-0 w-[250px] text-gray-600">
             <Avatar large />
             <div className="border-t mt-2">
               {menu.map((item, i) => (
