@@ -8,7 +8,7 @@ interface AvatarProps {
 }
 
 const Avatar: FC<AvatarProps> = ({ label = true, large = false, onClick }) => {
-  const { avatar, username } = useAppSelector((state) => state.user);
+  const { avatar, username, fullname } = useAppSelector((state) => state.user);
   return (
     <div
       className={`grid gap-2 ${
@@ -17,18 +17,22 @@ const Avatar: FC<AvatarProps> = ({ label = true, large = false, onClick }) => {
       onClick={() => onClick && onClick()}
     >
       {label && (
-        <div className={`flex flex-col ${large && "text-center order-last"}`}>
-          <span className="font-medium text-[14px] leading-3 capitalize">
-            {username}
+        <div
+          className={`flex flex-col text-right  ${
+            large && "!text-center order-last"
+          }`}
+        >
+          <span className="font-semibold text-[14px] capitalize">
+            {fullname}
           </span>
-          <span className="text-[10px] text text-blue-600">@developer</span>
+          <span className="text-[11px] text text-blue-600">{username}</span>
         </div>
       )}
       <div className="flex justify-center w-full">
         <img
           alt={username}
           src={avatar}
-          className={`${large ? "w-[70px]" : "w-[30px]"} rounded-[50%]`}
+          className={`${large ? "w-[70px]" : "w-[34px]"} rounded-[50%]`}
         />
       </div>
     </div>

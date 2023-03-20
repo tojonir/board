@@ -29,18 +29,18 @@ const Navigation: FC = () => {
   ];
   return (
     <nav className="w-full h-[50px] p-3 border-b flex justify-between items-center px-5 text-gray-600 shadow-sm relative">
-      <div>
+      <div className="w-1/3">
         <Search />
       </div>
       <div className="h-full flex items-center">
         <div className="border-r h-full mr-4 px-4 text-gray-500">
           <FontAwesomeIcon
             icon={solid("bell")}
-            className="px-3 cursor-pointer"
+            className="px-5 cursor-pointer"
           />
           <FontAwesomeIcon
             icon={solid("gear")}
-            className="px-3 cursor-pointer"
+            className="px-5 cursor-pointer"
           />
         </div>
         <Avatar onClick={() => setShow(!show)} />

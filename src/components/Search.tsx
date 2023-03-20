@@ -7,7 +7,7 @@ const Search: FC = () => {
     <div className="border rounded-[20px] text-gray-400 px-3 py-[2px] flex items-center">
       <input
         placeholder="search"
-        className="outline-none p-0 capitalize ml-2"
+        className="outline-none w-full p-0 capitalize ml-2"
       />
       <FontAwesomeIcon
         icon={solid("magnifying-glass")}
