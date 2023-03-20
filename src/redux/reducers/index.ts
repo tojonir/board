@@ -4,9 +4,12 @@ import {
   addRow,
   removeColumn,
   removeRow,
+  removeUser,
+  setUser,
   updateColumn,
   updateRow,
 } from "@utils/constant";
+import jwtDecode from "jwt-decode";
 
 export const appReducer = (
   state: string = "Welcome to react starter by tojonirina",
@@ -61,6 +64,23 @@ export const rowReducer = (state: any = [], action: AnyAction) => {
       });
       return updatedData;
 
+    default:
+      return state;
+  }
+};
+
+const initialUser =
+  localStorage.getItem("auth_token") || sessionStorage.getItem("auth_token");
+
+export const userReducer = (
+  state: any = initialUser && jwtDecode(initialUser),
+  action: AnyAction
+) => {
+  switch (action.type) {
+    case setUser:
+      return jwtDecode(action.token);
+    case removeUser:
+      return null;
     default:
       return state;
   }

@@ -1,13 +1,40 @@
 import Input from "@components/Input";
 import { brands, solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC } from "react";
-import { Link } from "react-router-dom";
+import { server } from "@utils/constant";
+import { FC, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 interface AuthFormProps {}
 
 const AuthForm: FC<AuthFormProps> = ({}) => {
-  const isSignUp = window.location.pathname === "/signup";
+  const isSignUp = window.location.pathname === "auth/register";
+  const checkBoxRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const authGithub = () => {
+    window.open(
+      `${server}auth/github`,
+      "github",
+      `top=100,left=${window.innerWidth / 3},width=500,height=${
+        window.innerHeight - 200
+      },menubar=no,status=no`
+    );
+  };
+
+  useEffect(() => {
+    window.onstorage = () => {
+      const token = localStorage.getItem("auth_token");
+      if (token) {
+        if (!checkBoxRef.current?.checked) {
+          localStorage.removeItem("auth_token");
+        }
+        sessionStorage.setItem("auth_token", token);
+        window.onstorage = null;
+        navigate("/board");
+      }
+    };
+  }, []);
+
   return (
     <div className="w-2/3 h-fit max-w-[380px] min-w-[300px] bg-white rounded-[3px] p-4 flex flex-col justify-between">
       <div>
@@ -34,7 +61,10 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
           <div className="grow h-[1px] bg-gray-300" />
         </div>
         <div className="p-2 grid grid-cols-1 gap-4 text-gray-600">
-          <div className="border rounded-[3px] p-2">
+          <div
+            className="border rounded-[3px] p-2 cursor-pointer"
+            onClick={() => authGithub()}
+          >
             <FontAwesomeIcon icon={brands("github")} />
             <span className="ml-2">Continue with Github</span>
           </div>

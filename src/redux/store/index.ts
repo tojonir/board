@@ -1,9 +1,15 @@
-import { appReducer, columnReducer, rowReducer } from "@redux/reducers";
+import {
+  appReducer,
+  columnReducer,
+  rowReducer,
+  userReducer,
+} from "@redux/reducers";
 import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
   reducer: {
     app: appReducer,
+    user: userReducer,
     column: columnReducer,
     row: rowReducer,
   },
