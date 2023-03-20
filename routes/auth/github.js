@@ -1,5 +1,7 @@
 const express = require("express");
 const axios = require("axios");
+const jwt = require("jsonwebtoken");
+const { User } = require("../../models/mongo.model");
 
 const route = express.Router();
 
@@ -19,9 +21,33 @@ route.get("/", async (req, res) => {
           headers: {
             Authorization: `Bearer ${response.data.access_token}`,
           },
-        }).then((response) => {
-          const { email, name, avatar_url } = response.data;
-          res.redirect("http://localhost:3000/login?token=tojonirina");
+        }).then(async (response) => {
+          const { login, email, name, avatar_url } = response.data;
+          await User.findOne({ email })
+            .then(async (user) => {
+              if (!user) {
+                const newUser = new User({
+                  username: login,
+                  email,
+                  fullname: name,
+                  avatar: avatar_url,
+                });
+                await newUser.save();
+              }
+              const token = jwt.sign(
+                {
+                  username: login,
+                  email,
+                  fullname: name,
+                  avatar: avatar_url,
+                },
+                process.env.PRIVATE_KEY
+              );
+              res.redirect("http://localhost:3000/auth/success?token=" + token);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         });
       })
       .catch((err) => {
