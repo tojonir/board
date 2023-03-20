@@ -4,3 +4,5 @@ export const updateColumn = "UPDATE_COLUMN";
 export const addRow = "ADD_ROW";
 export const removeRow = "REMOVE_ROW";
 export const updateRow = "UPDATE_ROW";
+
+export const server = "http://localhost:4000/";

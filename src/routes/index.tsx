@@ -1,4 +1,5 @@
 import Auth from "@pages/Auth";
+import AuthSuccess from "@pages/AuthSuccess";
 import Board from "@pages/Board";
 import Home from "@pages/Home";
 import Project from "@pages/Project";
@@ -11,8 +12,11 @@ const Routes: FC = () => {
     <Router>
       <Route path="/" element={<Home />} />
       <Route path="/project" element={<Project />} />
-      <Route path="/login" element={<Auth />} />
-      <Route path="/signup" element={<Auth />} />
+      <Route path="auth">
+        <Route path="login" element={<Auth />} />
+        <Route path="register" element={<Auth />} />
+        <Route path="success" element={<AuthSuccess />} />
+      </Route>
       <Route path="/workspace">
         <Route path="" element={<Workspace />} />
         <Route path="manage" element={<Workspace manage />} />
