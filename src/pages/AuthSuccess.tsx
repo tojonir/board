@@ -7,8 +7,9 @@ const AuthSuccess: FC = () => {
     const params: any = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, Props: string) => searchParams.get(Props),
     });
-    if (params["token"] && params["keep_login"]) {
-      window.close();
+    if (params["token"]) {
+      localStorage.setItem("auth_token", params["token"]);
+      setTimeout(() => window.close(), 2000);
     }
     if (!window.opener) {
       window.location.assign("/auth/login");
