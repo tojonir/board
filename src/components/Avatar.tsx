@@ -1,5 +1,6 @@
 import { FC } from "react";
 import user from "@assets/user.jpg";
+import { useAppSelector } from "@utils/hooks";
 
 interface AvatarProps {
   label?: boolean;
@@ -8,6 +9,7 @@ interface AvatarProps {
 }
 
 const Avatar: FC<AvatarProps> = ({ label = true, large = false, onClick }) => {
+  const { avatar, username } = useAppSelector((state) => state.user);
   return (
     <div
       className={`grid gap-2 ${
@@ -18,14 +20,14 @@ const Avatar: FC<AvatarProps> = ({ label = true, large = false, onClick }) => {
       {label && (
         <div className={`flex flex-col ${large && "text-center order-last"}`}>
           <span className="font-medium text-[14px] leading-3 capitalize">
-            tojonirina
+            {username}
           </span>
           <span className="text-[10px] text text-blue-600">@developer</span>
         </div>
       )}
       <div className="flex justify-center w-full">
         <img
-          src={user}
+          src={avatar}
           className={`${large ? "w-[70px]" : "w-[30px]"} rounded-[50%]`}
         />
       </div>
