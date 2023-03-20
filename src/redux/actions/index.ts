@@ -3,6 +3,7 @@ import {
   addRow,
   removeColumn,
   removeRow,
+  setUser,
   updateColumn,
   updateRow,
 } from "@utils/constant";
@@ -39,4 +40,13 @@ export const updateRowAction = (id: string, data: any) => ({
   type: updateRow,
   id,
   data,
+});
+
+export const setUserAction = (token: string) => ({
+  type: setUser,
+  token,
+});
+
+export const removeUserAction = (token: string) => ({
+  type: setUser,
 });
