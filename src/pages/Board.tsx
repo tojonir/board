@@ -9,16 +9,11 @@ import {
   updateColumnAction,
 } from "@redux/actions";
 import { useAppDispatch, useAppSelector } from "@utils/hooks";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 interface BoardProps {}
 
-interface columnSchema {
-  id: number;
-  title: string;
-}
-
-const Board: FC = () => {
+const Board: FC<BoardProps> = () => {
   const column = useAppSelector((state) => state.column);
   const row = useAppSelector((state) => state.row);
   const dispatch = useAppDispatch();

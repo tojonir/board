@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 interface AuthFormProps {}
 
-const AuthForm: FC<AuthFormProps> = ({}) => {
+const AuthForm: FC<AuthFormProps> = () => {
   const isSignUp = window.location.pathname === "auth/register";
   const checkBoxRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
         navigate("/board");
       }
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="w-2/3 h-fit max-w-[380px] min-w-[300px] bg-white rounded-[3px] p-4 flex flex-col justify-between">

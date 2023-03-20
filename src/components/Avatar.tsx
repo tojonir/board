@@ -1,5 +1,4 @@
 import { FC } from "react";
-import user from "@assets/user.jpg";
 import { useAppSelector } from "@utils/hooks";
 
 interface AvatarProps {
@@ -27,6 +26,7 @@ const Avatar: FC<AvatarProps> = ({ label = true, large = false, onClick }) => {
       )}
       <div className="flex justify-center w-full">
         <img
+          alt={username}
           src={avatar}
           className={`${large ? "w-[70px]" : "w-[30px]"} rounded-[50%]`}
         />
