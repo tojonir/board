@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const { google } = require("./routes/google");
-const { github } = require("./routes/github");
+const { google } = require("./routes/auth/google");
+const { github } = require("./routes/auth/github");
 
 const app = express();
 const port = process.env.PORT || 4000;
