@@ -7,17 +7,17 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children, withSideBar }) => {
+const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <main className="w-screen h-screen bg-no-repeat bg-cover overflow-hidden">
-      <Navigation />
-      <div className="h-[calc(100vh-50px)] flex">
-        {withSideBar && (
-          <div className="border-r min-w-[200px] w-1/4">
-            <SideBar />
-          </div>
-        )}
-        <div className="w-full">{children}</div>
+    <main className="w-screen h-screen flex overflow-hidden">
+      <div className="shadow-md h-full min-w-[200px] w-1/6">
+        <SideBar />
+      </div>
+      <div className="w-full">
+        <Navigation />
+        <div className="h-[calc(100vh-50px)] flex bg-gray-100">
+          <div className="w-full">{children}</div>
+        </div>
       </div>
     </main>
   );

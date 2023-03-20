@@ -1,6 +1,7 @@
 import Auth from "@pages/Auth";
 import AuthSuccess from "@pages/AuthSuccess";
 import Board from "@pages/Board";
+import Dashboard from "@pages/Dashboard";
 import Home from "@pages/Home";
 import Project from "@pages/Project";
 import Workspace from "@pages/Workspace";
@@ -11,6 +12,7 @@ const Routes: FC = () => {
   return (
     <Router>
       <Route path="/" element={<Home />} />
+      <Route path="/myspace" element={<Dashboard />} />
       <Route path="/project" element={<Project />} />
       <Route path="auth">
         <Route path="login" element={<Auth />} />

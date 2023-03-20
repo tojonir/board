@@ -28,14 +28,21 @@ const Navigation: FC = () => {
     },
   ];
   return (
-    <nav className="h-[50px] border-b flex justify-between items-center px-5 text-gray-600 shadow-sm relative">
-      <h1 className="font-semibold">Board</h1>
-      <div className="h-full flex justify-between items-center w-2/3">
-        <Link to="/">Home</Link>
-        <Link to="/workspace/manage">Workspace</Link>
-        <Link to="/">Project</Link>
-        <Link to="/">Team</Link>
+    <nav className="w-full h-[50px] p-3 border-b flex justify-between items-center px-5 text-gray-600 shadow-sm relative">
+      <div>
         <Search />
+      </div>
+      <div className="h-full flex items-center">
+        <div className="border-r h-full mr-4 px-4 text-gray-500">
+          <FontAwesomeIcon
+            icon={solid("bell")}
+            className="px-3 cursor-pointer"
+          />
+          <FontAwesomeIcon
+            icon={solid("gear")}
+            className="px-3 cursor-pointer"
+          />
+        </div>
         <Avatar onClick={() => setShow(!show)} />
         {show && (
           <div className="bg-white shadow-md border rounded-[3px] p-3 absolute top-full right-0 w-[250px] text-gray-600">
