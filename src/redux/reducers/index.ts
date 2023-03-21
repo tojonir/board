@@ -5,7 +5,9 @@ import {
   removeColumn,
   removeRow,
   removeUser,
+  removeWorkspace,
   setUser,
+  setWorkspace,
   updateColumn,
   updateRow,
 } from "@utils/constant";
@@ -94,9 +96,9 @@ export const workspaceReducer = (
   action: AnyAction
 ) => {
   switch (action.type) {
-    case setUser:
+    case setWorkspace:
       return action.workspace;
-    case removeUser:
+    case removeWorkspace:
       return null;
     default:
       return state;
