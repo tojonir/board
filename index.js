@@ -2,16 +2,14 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const { google } = require("./routes/auth/google");
-const { github } = require("./routes/auth/github");
+const { auth } = require("./routes/auth");
 
 const app = express();
 const port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cors());
 
-app.use("/auth/google", google);
-app.use("/auth/github", github);
+app.use("/auth", auth);
 
 const start = async () => {
   await mongoose
