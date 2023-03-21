@@ -7,12 +7,13 @@ import Project from "@pages/Project";
 import Workspace from "@pages/Workspace";
 import { FC } from "react";
 import { Routes as Router, Route, Navigate } from "react-router-dom";
+import AuthGuard from "services/AuthGuard";
 
 const Routes: FC = () => {
   return (
     <Router>
       <Route path="/" element={<Home />} />
-      <Route path="/myspace" element={<Dashboard />} />
+      <Route path="/myspace" element={<AuthGuard element={<Dashboard />} />} />
       <Route path="/project" element={<Project />} />
       <Route path="auth">
         <Route path="" element={<Navigate to="login" />} />
