@@ -1,7 +1,9 @@
 import Input from "@components/Input";
 import { brands, solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { setUserAction } from "@redux/actions";
 import { server } from "@utils/constant";
+import { useAppDispatch, useAppSelector } from "@utils/hooks";
 import { FC, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -10,6 +12,8 @@ interface AuthFormProps {}
 const AuthForm: FC<AuthFormProps> = () => {
   const isSignUp = window.location.pathname === "auth/register";
   const checkBoxRef = useRef<HTMLInputElement>(null);
+  const workspace = useAppSelector((state) => state.workspace);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authGithub = () => {
     window.open(
@@ -20,6 +24,9 @@ const AuthForm: FC<AuthFormProps> = () => {
       },menubar=no,status=no`
     );
   };
+  const auth = () => {
+    navigate(workspace ? `/${workspace}` : "/myspace");
+  };
 
   useEffect(() => {
     window.onstorage = () => {
@@ -29,8 +36,9 @@ const AuthForm: FC<AuthFormProps> = () => {
           localStorage.removeItem("auth_token");
         }
         sessionStorage.setItem("auth_token", token);
+        dispatch(setUserAction(token));
         window.onstorage = null;
-        navigate("/board");
+        navigate(workspace !== null ? `/${workspace}` : "/myspace");
       }
     };
   }, [navigate]);
@@ -49,7 +57,10 @@ const AuthForm: FC<AuthFormProps> = () => {
             </div>
           )}
 
-          <button className="py-1 px-2 m-2 bg-blue-600 rounded-[3px] text-white">
+          <button
+            className="py-1 px-2 m-2 bg-blue-600 rounded-[3px] text-white"
+            onClick={() => auth()}
+          >
             {isSignUp ? "Register" : "Login"}
           </button>
         </div>
