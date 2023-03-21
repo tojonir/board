@@ -3,6 +3,7 @@ import {
   columnReducer,
   rowReducer,
   userReducer,
+  workspaceReducer,
 } from "@redux/reducers";
 import { configureStore } from "@reduxjs/toolkit";
 
@@ -12,6 +13,7 @@ const store = configureStore({
     user: userReducer,
     column: columnReducer,
     row: rowReducer,
+    workspace: workspaceReducer,
   },
 });
 

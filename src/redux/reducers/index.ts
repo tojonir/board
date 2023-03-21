@@ -5,7 +5,9 @@ import {
   removeColumn,
   removeRow,
   removeUser,
+  removeWorkspace,
   setUser,
+  setWorkspace,
   updateColumn,
   updateRow,
 } from "@utils/constant";
@@ -80,6 +82,23 @@ export const userReducer = (
     case setUser:
       return jwtDecode(action.token);
     case removeUser:
+      return null;
+    default:
+      return state;
+  }
+};
+
+const initialWorkspace =
+  localStorage.getItem("workspace") || sessionStorage.getItem("workspace");
+
+export const workspaceReducer = (
+  state: any = initialWorkspace,
+  action: AnyAction
+) => {
+  switch (action.type) {
+    case setWorkspace:
+      return action.workspace;
+    case removeWorkspace:
       return null;
     default:
       return state;

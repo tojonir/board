@@ -3,7 +3,9 @@ import {
   addRow,
   removeColumn,
   removeRow,
+  removeWorkspace,
   setUser,
+  setWorkspace,
   updateColumn,
   updateRow,
 } from "@utils/constant";
@@ -47,6 +49,15 @@ export const setUserAction = (token: string) => ({
   token,
 });
 
-export const removeUserAction = (token: string) => ({
+export const removeUserAction = () => ({
   type: setUser,
+});
+
+export const setWorkspaceAction = (workspace: string) => ({
+  type: setWorkspace,
+  workspace,
+});
+
+export const removeWorkspaceAction = () => ({
+  type: removeWorkspace,
 });

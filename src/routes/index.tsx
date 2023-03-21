@@ -7,24 +7,29 @@ import Project from "@pages/Project";
 import Workspace from "@pages/Workspace";
 import { FC } from "react";
 import { Routes as Router, Route, Navigate } from "react-router-dom";
+import AuthGuard from "services/AuthGuard";
+import WorkspaceGuard from "services/WorkspaceGuard";
 
 const Routes: FC = () => {
   return (
     <Router>
-      <Route path="/" element={<Home />} />
-      <Route path="/myspace" element={<Dashboard />} />
-      <Route path="/project" element={<Project />} />
+      <Route path="/">
+        <Route path="" element={<WorkspaceGuard element={<Workspace />} />} />
+        <Route
+          path=":workspace"
+          element={<AuthGuard element={<Dashboard />} />}
+        />
+      </Route>
+
       <Route path="auth">
         <Route path="" element={<Navigate to="login" />} />
-        <Route path="login" element={<Auth />} />
-        <Route path="register" element={<Auth />} />
+        <Route path="login" element={<WorkspaceGuard element={<Auth />} />} />
+        <Route
+          path="register"
+          element={<WorkspaceGuard element={<Auth />} />}
+        />
         <Route path="success" element={<AuthSuccess />} />
       </Route>
-      <Route path="/workspace">
-        <Route path="" element={<Workspace />} />
-        <Route path="manage" element={<Workspace manage />} />
-      </Route>
-      <Route path="/board" element={<Board />} />
     </Router>
   );
 };
