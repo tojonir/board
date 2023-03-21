@@ -2,12 +2,16 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "@assets/logo.png";
+import { useAppDispatch } from "@utils/hooks";
+import { removeUserAction, removeWorkspaceAction } from "@redux/actions";
 
 export interface SideBarProps {}
 
 const SideBar: FC<SideBarProps> = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const menu: { title: string; icon: IconDefinition }[] = [
     {
       title: "dashboard",
@@ -30,6 +34,13 @@ const SideBar: FC<SideBarProps> = () => {
       icon: solid("comment"),
     },
   ];
+  const logout = () => {
+    dispatch(removeUserAction());
+    dispatch(removeWorkspaceAction());
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate("/");
+  };
   return (
     <div className="w-full h-full flex flex-col p-2">
       <div className="w-full flex justify-center items-center">
@@ -53,16 +64,16 @@ const SideBar: FC<SideBarProps> = () => {
           ))}
         </div>
         <div className="border-t">
-          <Link
-            to={`./logout`}
-            className="flex items-center hover:bg-gray-100 rounded-[3px] p-1 py-2"
+          <div
+            onClick={() => logout()}
+            className="flex items-center hover:bg-gray-100 rounded-[3px] p-1 py-2 cursor-pointer"
           >
             <FontAwesomeIcon
               icon={solid("sign-out")}
               className="text-[13px] w-[20px]"
             />
             <span className="ml-2 capitalize">logout</span>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
