@@ -12,20 +12,20 @@ import AuthGuard from "services/AuthGuard";
 const Routes: FC = () => {
   return (
     <Router>
-      <Route path="/" element={<Home />} />
-      <Route path="/myspace" element={<AuthGuard element={<Dashboard />} />} />
-      <Route path="/project" element={<Project />} />
+      <Route path="/">
+        <Route path="" element={<Workspace />} />
+        <Route
+          path=":workspace"
+          element={<AuthGuard element={<Dashboard />} />}
+        />
+      </Route>
+
       <Route path="auth">
         <Route path="" element={<Navigate to="login" />} />
         <Route path="login" element={<Auth />} />
         <Route path="register" element={<Auth />} />
         <Route path="success" element={<AuthSuccess />} />
       </Route>
-      <Route path="/workspace">
-        <Route path="" element={<Workspace />} />
-        <Route path="manage" element={<Workspace manage />} />
-      </Route>
-      <Route path="/board" element={<Board />} />
     </Router>
   );
 };

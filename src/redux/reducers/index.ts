@@ -85,3 +85,20 @@ export const userReducer = (
       return state;
   }
 };
+
+const initialWorkspace =
+  localStorage.getItem("workspace") || sessionStorage.getItem("workspace");
+
+export const workspaceReducer = (
+  state: any = initialWorkspace,
+  action: AnyAction
+) => {
+  switch (action.type) {
+    case setUser:
+      return action.workspace;
+    case removeUser:
+      return null;
+    default:
+      return state;
+  }
+};
