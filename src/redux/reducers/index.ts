@@ -75,7 +75,7 @@ const initialUser =
   localStorage.getItem("auth_token") || sessionStorage.getItem("auth_token");
 
 export const userReducer = (
-  state: any = initialUser && jwtDecode(initialUser),
+  state: any = !!initialUser && jwtDecode(initialUser),
   action: AnyAction
 ) => {
   switch (action.type) {

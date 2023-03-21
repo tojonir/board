@@ -3,6 +3,7 @@ import {
   addRow,
   removeColumn,
   removeRow,
+  removeUser,
   removeWorkspace,
   setUser,
   setWorkspace,
@@ -50,7 +51,7 @@ export const setUserAction = (token: string) => ({
 });
 
 export const removeUserAction = () => ({
-  type: setUser,
+  type: removeUser,
 });
 
 export const setWorkspaceAction = (workspace: string) => ({

@@ -15,9 +15,9 @@ const AuthForm: FC<AuthFormProps> = () => {
   const workspace = useAppSelector((state) => state.workspace);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const authGithub = () => {
+  const oauth = (service: string) => {
     window.open(
-      `${server}auth/github`,
+      `${server}auth/${service}`,
       "github",
       `top=100,left=${window.innerWidth / 3},width=500,height=${
         window.innerHeight - 200
@@ -74,12 +74,15 @@ const AuthForm: FC<AuthFormProps> = () => {
         <div className="p-2 grid grid-cols-1 gap-4 text-gray-600">
           <div
             className="border rounded-[3px] p-2 cursor-pointer"
-            onClick={() => authGithub()}
+            onClick={() => oauth("github")}
           >
             <FontAwesomeIcon icon={brands("github")} />
             <span className="ml-2">Continue with Github</span>
           </div>
-          <div className="border rounded-[3px] p-2">
+          <div
+            className="border rounded-[3px] p-2 cursor-pointer"
+            onClick={() => oauth("google")}
+          >
             <FontAwesomeIcon icon={brands("google")} />
             <span className="ml-2">Continue with Google</span>
           </div>
