@@ -6,10 +6,12 @@ const resolvers = {
   Query: {
     ...userResolver.query,
     ...workspaceResolver.query,
+    ...projectResolver.query,
   },
   Mutation: {
     ...userResolver.mutation,
     ...workspaceResolver.mutation,
+    ...projectResolver.mutation,
   },
   Workspace: { ...workspaceResolver.relation },
 };

@@ -3,6 +3,7 @@ type Workspace {
     id: ID
     name: String
     created_by: User
+    project:[Project]
   }
 `;
 

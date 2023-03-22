@@ -1,4 +1,4 @@
-const { User, Workspace } = require("../../models/mongo.model");
+const { User, Workspace, Project } = require("../../models/mongo.model");
 const query = {
   getAllWorkspace: async () => {
     return await Workspace.find();
@@ -25,6 +25,9 @@ const mutation = {
 const relation = {
   created_by: async ({ created_by }) => {
     return await User.findById(created_by);
+  },
+  project: async ({ _id }) => {
+    return await Project.find({ workspace: _id });
   },
 };
 
