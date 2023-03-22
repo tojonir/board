@@ -2,6 +2,7 @@ const axios = require("axios");
 const { User } = require("../models/mongo.model");
 const { compare } = require("./bcrypt.service");
 const { findAndUpdateUser } = require("./user.service");
+const jwt = require("jsonwebtoken");
 
 const formatUrl = (rootUrl, options) => {
   const query = new URLSearchParams(options);
