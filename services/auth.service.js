@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { User } = require("../models/mongo.model");
 const { compare } = require("./bcrypt.service");
-const { findAndCreateUser } = require("./user.service");
+const { findAndUpdateUser } = require("./user.service");
 
 const formatUrl = (rootUrl, options) => {
   const query = new URLSearchParams(options);
@@ -67,28 +67,10 @@ getGoogleUser = async (code) => {
   return response.data;
 };
 
-exports.loginWithGoogle = async (code) => {
-  // get user data
-  const { email } = await getGoogleUser(code);
-  // login
-  const { user, error } = await login(email);
-  if (error) return { error };
-  // generate token for client
-  return jwt.sign(
-    {
-      username: user.username,
-      email: user.email,
-      fullname: user.fullname,
-      avatar: user.avatar,
-    },
-    process.env.PRIVATE_KEY
-  );
-};
-
-exports.signupWithGoogle = async (code) => {
+exports.logWithGoogle = async (code) => {
   // get user data
   const { email, name, given_name, picture } = await getGoogleUser(code);
-  const user = await findAndCreateUser(
+  const user = await findAndUpdateUser(
     { email },
     { email, fullname: name, username: given_name, avatar: picture }
   );
@@ -142,29 +124,11 @@ getGithubUser = async (code) => {
   return response.data;
 };
 
-exports.loginWithGithub = async (code) => {
-  // get user data
-  const { email } = await getGithubUser(code);
-  // login
-  const { user, error } = await login(email);
-  if (error) return { error };
-  // generate token for client
-  return jwt.sign(
-    {
-      username: user.username,
-      email: user.email,
-      fullname: user.fullname,
-      avatar: user.avatar,
-    },
-    process.env.PRIVATE_KEY
-  );
-};
-
-exports.signupWithGithub = async (code) => {
+exports.logWithGithub = async (code) => {
   // get user data
   const { login, email, name, avatar_url } = await getGithubUser(code);
   // login
-  const user = await findAndCreateUser(
+  const user = await findAndUpdateUser(
     { email },
     { username: login, email, fullname: name, avatar: avatar_url }
   );

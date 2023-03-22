@@ -3,7 +3,7 @@ const { github, google } = require("../controllers/auth.controller");
 
 const route = express.Router();
 
-route.post("/github", github);
-route.post("/google", google);
+route.get("/github", github);
+route.get("/google", google);
 
 exports.auth = route;

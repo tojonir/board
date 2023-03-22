@@ -9,6 +9,6 @@ exports.findAndCreateUser = async (filter, data) => {
   return user;
 };
 
-exports.findAndUpdateUser = async (filter, data, options) => {
-  return User.findOneAndUpdate(filter, data, options);
+exports.findAndUpdateUser = async (filter, data) => {
+  return User.findOneAndUpdate(filter, data, { upsert: true, new: true });
 };
