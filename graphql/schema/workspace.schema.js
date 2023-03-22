@@ -7,13 +7,14 @@ type Workspace {
 `;
 
 const query = `
-workspaces: [Workspace]
-workspace(id: ID!): Workspace
+getAllWorkspace: [Workspace]
+getWorkspaceById(id: ID!): Workspace
 getWorkspaceByName(name: String!): Workspace
 `;
 
 const mutation = `
 createWorkSpace(name: String!, created_by: String!): Workspace
+deleteWorkspace(id:ID!):[Workspace]
 `;
 
 module.exports = { type, query, mutation };

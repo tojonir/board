@@ -1,9 +1,9 @@
-const { Workspace } = require("../../models/mongo.model");
+const { User, Workspace } = require("../../models/mongo.model");
 const query = {
-  workspaces: async () => {
+  getAllWorkspace: async () => {
     return await Workspace.find();
   },
-  workspace: async (_, { id }) => {
+  getWorkspaceById: async (_, { id }) => {
     return await Workspace.findById(id);
   },
   getWorkspaceByName: async (_, { name }) => {
@@ -15,6 +15,10 @@ const mutation = {
   createWorkSpace: async (_, { name, created_by }) => {
     const newWorkspace = new Workspace({ name, created_by });
     return await newWorkspace.save();
+  },
+  deleteWorkspace: async (_, { id }) => {
+    await Workspace.deleteOne({ _id: id });
+    return await Workspace.find();
   },
 };
 
