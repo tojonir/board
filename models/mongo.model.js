@@ -93,7 +93,7 @@ const Column = new Schema({
 const Row = new Schema({
   title: String,
   description: String,
-  status: String,
+  column: { type: Schema.Types.ObjectId, ref: "Column" },
   type: String,
   created_by: { type: Schema.Types.ObjectId, ref: "User" },
   assign_to: { type: Schema.Types.ObjectId, ref: "User" },
