@@ -6,9 +6,12 @@ const query = {
 };
 
 const mutation = {
-  createProject: async (_, { name, workspace }) => {
-    const newProject = new Project({ name, workspace });
-    newProject.save();
+  upsertProject: async (_, { name, workspace }) => {
+    await Project.findOneAndUpdate(
+      { name, workspace },
+      { name, workspace },
+      { upsert: true, new: true }
+    );
     return await Project.find({ workspace });
   },
   deleteProject: async (_, { id }) => {

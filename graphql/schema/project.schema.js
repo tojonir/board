@@ -11,7 +11,7 @@ getAllProject:[Project]
 `;
 
 const mutation = `
-createProject(name:String!,workspace:ID!):[Project]
+upsertProject(name:String!,workspace:ID!):[Project]
 deleteProject(id:ID!):[Project]
 `;
 
