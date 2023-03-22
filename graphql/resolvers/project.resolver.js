@@ -6,12 +6,23 @@ const query = {
 };
 
 const mutation = {
-  upsertProject: async (_, { name, workspace }) => {
-    await Project.findOneAndUpdate(
-      { name, workspace },
-      { name, workspace },
-      { upsert: true, new: true }
-    );
+  upsertProject: async (_, { id, name, workspace }) => {
+    // update
+    if (id) {
+      await Project.findOneAndUpdate(
+        { _id: id },
+        { name, workspace },
+        { upsert: true, new: true }
+      );
+    }
+    //check if project exist in workspace
+    const check = await Project.findOne({ name, workspace });
+    if (check) throw Error("Project already existed");
+
+    // if not create new project
+    const newProject = new Project({ name, workspace });
+    await newProject.save();
+
     return await Project.find({ workspace });
   },
   deleteProject: async (_, { id }) => {
