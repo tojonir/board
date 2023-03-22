@@ -54,6 +54,24 @@ const Project = new Schema({
   },
 });
 
+const Team = new Schema({
+  email: String,
+  project: { type: Schema.Types.ObjectId, ref: "Project" },
+  created_at: {
+    type: Date,
+    default: () => {
+      return Date.now();
+    },
+  },
+  updated_at: {
+    type: Date,
+    default: () => {
+      return Date.now();
+    },
+  },
+});
+
 exports.User = model("User", User);
 exports.Workspace = model("Workspace", Workspace);
 exports.Project = model("Project", Project);
+exports.Team = model("Team", Team);
