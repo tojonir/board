@@ -14,14 +14,15 @@ const mutation = {
         { name, workspace },
         { upsert: true, new: true }
       );
-    }
-    //check if project exist in workspace
-    const check = await Project.findOne({ name, workspace });
-    if (check) throw Error("Project already existed");
+    } else {
+      //check if project exist in workspace
+      const check = await Project.findOne({ name, workspace });
+      if (check) throw Error("Project already existed");
 
-    // if not create new project
-    const newProject = new Project({ name, workspace });
-    await newProject.save();
+      // if not create new project
+      const newProject = new Project({ name, workspace });
+      await newProject.save();
+    }
 
     return await Project.find({ workspace });
   },

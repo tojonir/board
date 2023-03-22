@@ -14,7 +14,7 @@ getWorkspaceByName(name: String!): Workspace
 `;
 
 const mutation = `
-createWorkSpace(name: String!, created_by: String!): Workspace
+upsertWorkSpace(id:ID,name: String!, created_by: String!): Workspace
 deleteWorkspace(id:ID!):[Workspace]
 `;
 

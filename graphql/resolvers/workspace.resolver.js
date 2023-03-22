@@ -12,9 +12,21 @@ const query = {
 };
 
 const mutation = {
-  createWorkSpace: async (_, { name, created_by }) => {
-    const newWorkspace = new Workspace({ name, created_by });
-    return await newWorkspace.save();
+  upsertWorkSpace: async (_, { id, name, created_by }) => {
+    // update
+    if (id) {
+      await Workspace.findOneAndUpdate(
+        { _id: id },
+        { name, created_by },
+        { upsert: true, new: true }
+      );
+    } else {
+      // create
+      const newWorkspace = new Workspace({ name, created_by });
+      await newWorkspace.save();
+    }
+
+    return await Workspace.find({ created_by });
   },
   deleteWorkspace: async (_, { id }) => {
     await Workspace.deleteOne({ _id: id });
