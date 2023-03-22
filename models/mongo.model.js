@@ -57,6 +57,7 @@ const Project = new Schema({
 const Team = new Schema({
   email: String,
   project: { type: Schema.Types.ObjectId, ref: "Project" },
+  invitation: { type: String, default: "Pending" },
   created_at: {
     type: Date,
     default: () => {

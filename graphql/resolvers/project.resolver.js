@@ -1,4 +1,4 @@
-const { User, Project } = require("../../models/mongo.model");
+const { User, Project, Team } = require("../../models/mongo.model");
 const query = {
   getAllProject: async () => {
     return await Project.find();
@@ -32,6 +32,10 @@ const mutation = {
   },
 };
 
-const relation = {};
+const relation = {
+  team: async ({ _id }) => {
+    return Team.find({ project: _id });
+  },
+};
 
 module.exports = { query, mutation, relation };

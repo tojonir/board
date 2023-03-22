@@ -3,6 +3,7 @@ type Project {
     id: ID
     name: String
     workspace: Workspace
+    team:[Team]
   }
 `;
 

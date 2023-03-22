@@ -2,13 +2,25 @@ const { gql } = require("apollo-server-express");
 const userSchema = require("./user.schema");
 const workspaceSchema = require("./workspace.schema");
 const projectSchema = require("./project.schema");
+const teamSchema = require("./team.schema");
 
-const type = [userSchema.type, workspaceSchema.type, projectSchema.type];
-const query = [userSchema.query, workspaceSchema.query, projectSchema.query];
+const type = [
+  userSchema.type,
+  workspaceSchema.type,
+  projectSchema.type,
+  teamSchema.type,
+];
+const query = [
+  userSchema.query,
+  workspaceSchema.query,
+  projectSchema.query,
+  teamSchema.query,
+];
 const mutation = [
   userSchema.mutation,
   workspaceSchema.mutation,
   projectSchema.mutation,
+  teamSchema.mutation,
 ];
 
 const typeDefs = gql`
