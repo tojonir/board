@@ -112,9 +112,29 @@ const Row = new Schema({
   },
 });
 
+const Comment = new Schema({
+  content: String,
+  row: { type: Schema.Types.ObjectId, ref: "Row" },
+  type: { type: String, default: "text" },
+  created_by: { type: Schema.Types.ObjectId, ref: "User" },
+  created_at: {
+    type: Date,
+    default: () => {
+      return Date.now();
+    },
+  },
+  updated_at: {
+    type: Date,
+    default: () => {
+      return Date.now();
+    },
+  },
+});
+
 exports.User = model("User", User);
 exports.Workspace = model("Workspace", Workspace);
 exports.Project = model("Project", Project);
 exports.Team = model("Team", Team);
 exports.Column = model("Column", Column);
 exports.Row = model("Row", Row);
+exports.Comment = model("Comment", Comment);

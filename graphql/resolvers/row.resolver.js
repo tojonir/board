@@ -1,5 +1,9 @@
-const { Row } = require("../../models/mongo.model");
-const query = {};
+const { Row, Comment } = require("../../models/mongo.model");
+const query = {
+  getAllRow: async (_, { column }) => {
+    return await Row.find({ column });
+  },
+};
 
 const mutation = {
   upsertRow: async (_, { id, data }) => {
@@ -18,6 +22,10 @@ const mutation = {
   },
 };
 
-const relation = {};
+const relation = {
+  comment: async ({ _id }) => {
+    return await Comment.find({ row: _id });
+  },
+};
 
 module.exports = { query, mutation, relation };

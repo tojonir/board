@@ -8,6 +8,7 @@ type Row {
     created_by:User
     assign_to:User
     project:Project
+    comment:[Comment]
   }
 input rowInput{
   title: String
@@ -21,6 +22,7 @@ input rowInput{
 `;
 
 const query = `
+getAllRow(column:ID!):[Row]
 `;
 
 const mutation = `

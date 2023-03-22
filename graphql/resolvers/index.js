@@ -4,6 +4,7 @@ const projectResolver = require("./project.resolver");
 const teamResolver = require("./team.resolver");
 const columnResolver = require("./column.resolver");
 const rowResolver = require("./row.resolver");
+const commentResolver = require("./comment.resolver");
 
 const resolvers = {
   Query: {
@@ -13,6 +14,7 @@ const resolvers = {
     ...teamResolver.query,
     ...columnResolver.query,
     ...rowResolver.query,
+    ...commentResolver.query,
   },
   Mutation: {
     ...userResolver.mutation,
@@ -21,12 +23,14 @@ const resolvers = {
     ...teamResolver.mutation,
     ...columnResolver.mutation,
     ...rowResolver.mutation,
+    ...commentResolver.mutation,
   },
   Workspace: { ...workspaceResolver.relation },
   Team: { ...teamResolver.relation },
   Project: { ...projectResolver.relation },
   Column: { ...columnResolver.relation },
   Row: { ...rowResolver.relation },
+  Comment: { ...commentResolver.relation },
 };
 
 module.exports = { resolvers };
