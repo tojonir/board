@@ -72,7 +72,49 @@ const Team = new Schema({
   },
 });
 
+const Column = new Schema({
+  name: String,
+  project: { type: Schema.Types.ObjectId, ref: "Project" },
+  created_by: { type: Schema.Types.ObjectId, ref: "User" },
+  created_at: {
+    type: Date,
+    default: () => {
+      return Date.now();
+    },
+  },
+  updated_at: {
+    type: Date,
+    default: () => {
+      return Date.now();
+    },
+  },
+});
+
+const Row = new Schema({
+  title: String,
+  description: String,
+  status: String,
+  type: String,
+  created_by: { type: Schema.Types.ObjectId, ref: "User" },
+  assign_to: { type: Schema.Types.ObjectId, ref: "User" },
+  project: { type: Schema.Types.ObjectId, ref: "Project" },
+  created_at: {
+    type: Date,
+    default: () => {
+      return Date.now();
+    },
+  },
+  updated_at: {
+    type: Date,
+    default: () => {
+      return Date.now();
+    },
+  },
+});
+
 exports.User = model("User", User);
 exports.Workspace = model("Workspace", Workspace);
 exports.Project = model("Project", Project);
 exports.Team = model("Team", Team);
+exports.Column = model("Column", Column);
+exports.Row = model("Row", Row);
