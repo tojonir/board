@@ -44,11 +44,7 @@ const SideBar: FC<SideBarProps> = () => {
   return (
     <div className="w-full h-full flex flex-col p-2">
       <div className="w-full flex justify-center items-center">
-        <img
-          alt="project"
-          className="w-[100px] rounded-[3px] mr-2"
-          src={logo}
-        />
+        <img alt="project" className="w-full rounded-[3px] mr-2" src={logo} />
       </div>
       <div className="p-1 mt-3 grow text-gray-600 flex flex-col justify-between">
         <div>
