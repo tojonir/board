@@ -1,3 +1,4 @@
+import { workspace } from "@graphql/cache";
 import { useAppSelector } from "@utils/hooks";
 import { FC, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
@@ -7,12 +8,16 @@ interface WorkspaceGuardProps {
 }
 
 const WorkspaceGuard: FC<WorkspaceGuardProps> = ({ element }) => {
-  const workspace = useAppSelector((state) => state.workspace);
+  const currentWorkspace = workspace();
   const user = useAppSelector((state) => state.user);
   return (
     <>
       {user ? (
-        <Navigate to={workspace ? `/${workspace}` : "/myspace"} />
+        <Navigate
+          to={
+            currentWorkspace !== null ? `/${currentWorkspace.name}` : "/myspace"
+          }
+        />
       ) : (
         element
       )}

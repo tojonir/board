@@ -1,9 +1,10 @@
 import Input from "@components/Input";
 import { brands, solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { workspace } from "@graphql/cache";
 import { setUserAction } from "@redux/actions";
 import { server } from "@utils/constant";
-import { useAppDispatch, useAppSelector } from "@utils/hooks";
+import { useAppDispatch } from "@utils/hooks";
 import { FC, useEffect, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -11,10 +12,9 @@ interface AuthFormProps {}
 
 const AuthForm: FC<AuthFormProps> = () => {
   const { authType } = useParams();
-  console.log(authType);
   const isSignUp = authType === "register";
   const checkBoxRef = useRef<HTMLInputElement>(null);
-  const workspace = useAppSelector((state) => state.workspace);
+  const currentWorkspace = workspace();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const oauth = (service: string) => {
@@ -40,7 +40,9 @@ const AuthForm: FC<AuthFormProps> = () => {
         sessionStorage.setItem("auth_token", token);
         dispatch(setUserAction(token));
         window.onstorage = null;
-        navigate(workspace !== null ? `/${workspace}` : "/myspace");
+        navigate(
+          currentWorkspace !== null ? `/${currentWorkspace.name}` : "/myspace"
+        );
       }
     };
   }, [navigate]);

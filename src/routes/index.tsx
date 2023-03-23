@@ -27,6 +27,7 @@ const Routes: FC = () => {
           path=":authType"
           element={<WorkspaceGuard element={<Auth />} />}
         />
+        <Route path="success" element={<AuthSuccess />} />
       </Route>
     </Router>
   );
