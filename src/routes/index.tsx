@@ -23,12 +23,10 @@ const Routes: FC = () => {
 
       <Route path="auth">
         <Route path="" element={<Navigate to="login" />} />
-        <Route path="login" element={<WorkspaceGuard element={<Auth />} />} />
         <Route
-          path="register"
+          path=":authType"
           element={<WorkspaceGuard element={<Auth />} />}
         />
-        <Route path="success" element={<AuthSuccess />} />
       </Route>
     </Router>
   );

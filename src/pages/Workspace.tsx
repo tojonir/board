@@ -1,41 +1,61 @@
+import { useLazyQuery } from "@apollo/client";
 import Input from "@components/Input";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { setWorkspaceAction } from "@redux/actions";
-import { useAppDispatch, useAppSelector } from "@utils/hooks";
-import { FC, useRef, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { workspace } from "@graphql/cache";
+import { GET_WORKSPACE_BY_NAME } from "@graphql/query";
+import { FC, useRef } from "react";
+import { Link, Navigate } from "react-router-dom";
 
 interface WorkspaceProps {}
 
 const Workspace: FC<WorkspaceProps> = () => {
-  const workspace = useAppSelector((state) => state.workspace);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const [checkWorkspace, data] = useLazyQuery(GET_WORKSPACE_BY_NAME);
   const inputRef = useRef<HTMLInputElement>(null);
   const start = (value = inputRef.current?.value) => {
     if (value && value !== "") {
-      dispatch(setWorkspaceAction(value));
-      navigate("/auth");
+      checkWorkspace({
+        variables: {
+          name: value,
+        },
+      });
     }
   };
+
+  if (data && data.data) {
+    sessionStorage.setItem(
+      "workspace",
+      JSON.stringify(data.data.getWorkspaceByName)
+    );
+    workspace(data.data.getWorkspaceByName);
+  }
+
   return (
     <>
-      {workspace ? (
-        <Navigate to={`/${workspace}`} />
+      {workspace() ? (
+        <Navigate to={`/login`} />
       ) : (
         <div className="w-screen h-screen overflow-hidden flex justify-center items-center bg-gray-200">
           <div className="w-1/3 h-fit bg-white rounded-[3px] p-2 flex flex-col justify-between">
-            <div className="">
+            <div className="w-full">
               <p className="text-[25px]">Workspace</p>
-              <div className="flex items-center py-5">
-                <Input ref={inputRef} label="enter workspace" />
-                <button
-                  className="bg-blue-600 w-1/3 text-white px-2 py-2 rounded-[3px]"
-                  onClick={() => start()}
+              <div className="w-full flex items-center py-5">
+                <div className="grow">
+                  <Input ref={inputRef} label="enter workspace" />
+                </div>
+                <div
+                  onClick={() => !data.loading && start()}
+                  className="bg-blue-600 w-1/3 flex justify-center cursor-pointer text-white px-2 py-2 rounded-[3px]"
                 >
-                  start
-                </button>
+                  {data.loading ? (
+                    <FontAwesomeIcon
+                      icon={solid("spinner")}
+                      className="spinner"
+                    />
+                  ) : (
+                    "start"
+                  )}
+                </div>
               </div>
             </div>
             <div className="flex justify-between items-center text-gray-400">
@@ -43,7 +63,9 @@ const Workspace: FC<WorkspaceProps> = () => {
                 <FontAwesomeIcon icon={solid("user-alt")} className="mr-2" />
                 <span>Sign up</span>
               </Link>
-              <Link to="auth">Personal space</Link>
+              <Link to="auth" className="capitalize">
+                continue to personal space
+              </Link>
             </div>
           </div>
         </div>

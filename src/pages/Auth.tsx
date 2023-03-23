@@ -1,15 +1,17 @@
 import AuthForm from "@containers/AuthForm";
-import { useAppSelector } from "@utils/hooks";
+import { workspace } from "@graphql/cache";
 import { FC } from "react";
 
 const Auth: FC = () => {
-  const workspace = useAppSelector((state) => state.workspace);
+  const currentWorkspace = workspace();
   return (
     <div className="w-screen h-screen overflow-hidden grid grid-cols-2">
       <div className="flex justify-center items-center">
         <div>
           <h1 className="text-[44px] font-medium">
-            {workspace ? `Continue to ${workspace}` : "Welcome to startrack"}
+            {currentWorkspace
+              ? `Continue to ${currentWorkspace.name}`
+              : "Welcome to startrack"}
           </h1>
           <p>be part of us today</p>
         </div>

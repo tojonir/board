@@ -5,12 +5,14 @@ import { setUserAction } from "@redux/actions";
 import { server } from "@utils/constant";
 import { useAppDispatch, useAppSelector } from "@utils/hooks";
 import { FC, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface AuthFormProps {}
 
 const AuthForm: FC<AuthFormProps> = () => {
-  const isSignUp = window.location.pathname === "auth/register";
+  const { authType } = useParams();
+  console.log(authType);
+  const isSignUp = authType === "register";
   const checkBoxRef = useRef<HTMLInputElement>(null);
   const workspace = useAppSelector((state) => state.workspace);
   const dispatch = useAppDispatch();
@@ -25,7 +27,7 @@ const AuthForm: FC<AuthFormProps> = () => {
     );
   };
   const auth = () => {
-    navigate(workspace ? `/${workspace}` : "/myspace");
+    console.log("auth");
   };
 
   useEffect(() => {
@@ -47,7 +49,9 @@ const AuthForm: FC<AuthFormProps> = () => {
     <div className="w-2/3 h-fit max-w-[380px] min-w-[300px] bg-white rounded-[3px] p-4 flex flex-col justify-between">
       <div>
         <div className="flex flex-col">
-          {isSignUp && <Input label="username" leftIcon={solid("user-alt")} />}
+          {authType === "register" && (
+            <Input label="username" leftIcon={solid("user-alt")} />
+          )}
           <Input label="mail" leftIcon={solid("envelope")} />
           <Input label="password" leftIcon={solid("lock")} type="password" />
           {!isSignUp && (
@@ -90,9 +94,9 @@ const AuthForm: FC<AuthFormProps> = () => {
       </div>
       <div className="flex items-center justify-center text-blue-500">
         {isSignUp ? (
-          <Link to="/login">Login</Link>
+          <Link to="/auth">Login</Link>
         ) : (
-          <Link to="/signup">Register</Link>
+          <Link to="/auth/register">Register</Link>
         )}
 
         <div className="w-[1px] mx-3" />
