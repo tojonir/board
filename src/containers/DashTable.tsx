@@ -24,15 +24,21 @@ const DashTable: FC<DashTableProps> = ({
       <div className="w-full my-2">
         <table className="w-full">
           <thead className="border-b">
-            {header?.map((h) => (
-              <th className="text-left font-normal p-2">{h}</th>
-            ))}
+            <tr>
+              {header?.map((h, i) => (
+                <th key={i} className="text-left font-normal p-2">
+                  {h}
+                </th>
+              ))}
+            </tr>
           </thead>
           <tbody>
-            {data?.map((r) => (
-              <tr>
-                {r.map((c: any) => (
-                  <td className="text-left font-normal p-2">{c}</td>
+            {data?.map((r, i) => (
+              <tr key={i}>
+                {r.map((c: any, i: number) => (
+                  <td key={i} className="text-left font-normal p-2">
+                    {c}
+                  </td>
                 ))}
               </tr>
             ))}

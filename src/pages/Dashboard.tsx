@@ -37,8 +37,11 @@ const Dashboard: FC = () => {
     <Layout>
       <div className="p-5">
         <div className="grid grid-cols-4 gap-4">
-          {headerData.map((data) => (
-            <div className="bg-white p-2 px-5 rounded-[3px] shadow-sm flex justify-between items-center">
+          {headerData.map((data, i) => (
+            <div
+              key={i}
+              className="bg-white p-2 px-5 rounded-[3px] shadow-sm flex justify-between items-center"
+            >
               <div className={`${data.bg} p-2 w-[50px] h-[50px] rounded-[50%]`}>
                 <img src={data.icon} alt="" className="w-full" />
               </div>
