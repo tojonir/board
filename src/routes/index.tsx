@@ -15,18 +15,14 @@ const Routes: FC = () => {
     <Router>
       <Route path="/">
         <Route path="" element={<WorkspaceGuard element={<Workspace />} />} />
-        <Route
-          path=":workspace"
-          element={<AuthGuard element={<Dashboard />} />}
-        />
+        <Route path=":workspace">
+          <Route path="" element={<AuthGuard element={<Dashboard />} />} />
+        </Route>
       </Route>
 
       <Route path="auth">
         <Route path="" element={<Navigate to="login" />} />
-        <Route
-          path=":authType"
-          element={<WorkspaceGuard element={<Auth />} />}
-        />
+        <Route path=":authType" element={<Auth />} />
         <Route path="success" element={<AuthSuccess />} />
       </Route>
     </Router>

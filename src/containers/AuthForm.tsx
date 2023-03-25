@@ -1,11 +1,10 @@
 import Input from "@components/Input";
 import { brands, solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { workspace } from "@graphql/cache";
-import { setUserAction } from "@redux/actions";
+import { user, workspace } from "@graphql/cache";
 import { server } from "@utils/constant";
-import { useAppDispatch } from "@utils/hooks";
-import { FC, useEffect, useRef } from "react";
+import jwtDecode from "jwt-decode";
+import { FC, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface AuthFormProps {}
@@ -15,7 +14,6 @@ const AuthForm: FC<AuthFormProps> = () => {
   const isSignUp = authType === "register";
   const checkBoxRef = useRef<HTMLInputElement>(null);
   const currentWorkspace = workspace();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const oauth = (service: string) => {
     window.open(
@@ -30,22 +28,20 @@ const AuthForm: FC<AuthFormProps> = () => {
     console.log("auth");
   };
 
-  useEffect(() => {
-    window.onstorage = () => {
-      const token = localStorage.getItem("auth_token");
-      if (token) {
-        if (!checkBoxRef.current?.checked) {
-          localStorage.removeItem("auth_token");
-        }
-        sessionStorage.setItem("auth_token", token);
-        dispatch(setUserAction(token));
-        window.onstorage = null;
-        navigate(
-          currentWorkspace !== null ? `/${currentWorkspace.name}` : "/myspace"
-        );
+  window.onstorage = () => {
+    const token = localStorage.getItem("auth_token");
+    if (token) {
+      if (!checkBoxRef.current?.checked) {
+        localStorage.removeItem("auth_token");
       }
-    };
-  }, [navigate]);
+      sessionStorage.setItem("auth_token", token);
+      user(jwtDecode(token));
+      window.onstorage = null;
+      navigate(
+        currentWorkspace !== null ? `/${currentWorkspace.name}` : "/myspace"
+      );
+    }
+  };
 
   return (
     <div className="w-2/3 h-fit max-w-[380px] min-w-[300px] bg-white rounded-[3px] p-4 flex flex-col justify-between">

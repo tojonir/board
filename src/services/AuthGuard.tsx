@@ -1,13 +1,28 @@
-import { useAppSelector } from "@utils/hooks";
+import { useQuery } from "@apollo/client";
+import { user, workspace } from "@graphql/cache";
+import { GET_WORKSPACE_BY_NAME } from "@graphql/query";
 import { FC, ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 interface AuthGuardProps {
   element: ReactNode;
 }
 
 const AuthGuard: FC<AuthGuardProps> = ({ element }) => {
-  const auth = useAppSelector((state) => state.user);
+  const query = useParams();
+  const { loading, error, data } = useQuery(GET_WORKSPACE_BY_NAME, {
+    variables: { name: query.workspace },
+  });
+  const auth = user();
+  if (loading) return <p>Please wait</p>;
+  if (error) return <p>{error.message}</p>;
+  if (data) {
+    sessionStorage.setItem(
+      "workspace",
+      JSON.stringify(data.getWorkspaceByName)
+    );
+    workspace(data.getWorkspaceByName);
+  }
   return <>{!!auth ? element : <Navigate to="/auth" />}</>;
 };
 

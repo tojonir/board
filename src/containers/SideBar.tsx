@@ -4,13 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "@assets/logo.png";
-import { useAppDispatch } from "@utils/hooks";
-import { removeUserAction, removeWorkspaceAction } from "@redux/actions";
+import { user, workspace } from "@graphql/cache";
 
 export interface SideBarProps {}
 
 const SideBar: FC<SideBarProps> = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const menu: { title: string; icon: IconDefinition }[] = [
     {
@@ -35,8 +33,8 @@ const SideBar: FC<SideBarProps> = () => {
     },
   ];
   const logout = () => {
-    dispatch(removeUserAction());
-    dispatch(removeWorkspaceAction());
+    user(null);
+    workspace(null);
     localStorage.clear();
     sessionStorage.clear();
     navigate("/");

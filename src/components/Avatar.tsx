@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useAppSelector } from "@utils/hooks";
+import { user } from "@graphql/cache";
 
 interface AvatarProps {
   label?: boolean;
@@ -8,7 +8,7 @@ interface AvatarProps {
 }
 
 const Avatar: FC<AvatarProps> = ({ label = true, large = false, onClick }) => {
-  const { avatar, username, fullname } = useAppSelector((state) => state.user);
+  const { avatar, username, fullname } = user();
   return (
     <div
       className={`grid gap-2 ${
