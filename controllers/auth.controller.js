@@ -1,11 +1,10 @@
-const { compare } = require("bcrypt");
 const { authInput, newUserInput } = require("../models/input.model");
-const { User } = require("../models/mongo.model");
 const {
   getGoogleConsentUrl,
   getGithubConsentUrl,
   logWithGithub,
   logWithGoogle,
+  login,
 } = require("../services/auth.service");
 const { encrypt } = require("../services/bcrypt.service");
 const { findAndCreateUser } = require("../services/user.service");
@@ -41,10 +40,7 @@ exports.login = async (req, res) => {
   await authInput
     .validate(req.body)
     .then(async () => {
-      const user = await User.findOne({ email: req.body.email });
-      if (!user) return res.status(404).send("User not found");
-      const checkPwd = await compare(req.body.password, user.password);
-      if (!checkPwd) return res.status(404).send("Wrong password");
+      const user = await login(req.body.email, req.body.password);
       const token = jwt.sign(
         {
           username: user.username,

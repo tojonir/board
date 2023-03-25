@@ -9,14 +9,13 @@ const formatUrl = (rootUrl, options) => {
   return `${rootUrl}?${query.toString()}`;
 };
 exports.login = async (email, password) => {
-  const response = {};
-  const user = await User.find({ email });
-  if (!user) response.error = "User not found";
+  const user = await User.findOne({ email });
+  if (!user) throw Error("User not found");
   if (password) {
     const checkPassword = await compare(password, user.password);
-    if (!checkPassword) response.error = "Wrong password";
+    if (!checkPassword) throw Error("Wrong password");
   }
-  return { ...response, user };
+  return user;
 };
 
 // google oauth
