@@ -7,8 +7,8 @@ const {
   login,
 } = require("../services/auth.service");
 const { encrypt } = require("../services/bcrypt.service");
+const { generateUserToken } = require("../services/jwt.service");
 const { findAndCreateUser } = require("../services/user.service");
-const jwt = require("jsonwebtoken");
 
 exports.github = async (req, res) => {
   if (req.query.code) {
@@ -41,15 +41,7 @@ exports.login = async (req, res) => {
     .validate(req.body)
     .then(async () => {
       const user = await login(req.body.email, req.body.password);
-      const token = jwt.sign(
-        {
-          username: user.username,
-          email: user.email,
-          fullname: user.fullname,
-          avatar: user.avatar,
-        },
-        process.env.PRIVATE_KEY
-      );
+      const token = generateUserToken(user);
       return res.send(token);
     })
     .catch((err) => {
@@ -64,15 +56,7 @@ exports.signup = async (req, res) => {
       const password = await encrypt(req.body.password);
       const userData = { ...req.body, password };
       const user = await findAndCreateUser({ email: req.body.email }, userData);
-      const token = jwt.sign(
-        {
-          username: user.username,
-          email: user.email,
-          fullname: user.fullname,
-          avatar: user.avatar,
-        },
-        process.env.PRIVATE_KEY
-      );
+      const token = generateUserToken(user);
       return res.send(token);
     })
     .catch((err) => {

@@ -75,15 +75,7 @@ exports.logWithGoogle = async (code) => {
     { email, fullname: name, username: given_name, avatar: picture }
   );
   // generate token for client
-  return jwt.sign(
-    {
-      username: user.username,
-      email: user.email,
-      fullname: user.fullname,
-      avatar: user.avatar,
-    },
-    process.env.PRIVATE_KEY
-  );
+  return generateUserToken(user);
 };
 
 // github oauth
@@ -133,13 +125,5 @@ exports.logWithGithub = async (code) => {
     { username: login, email, fullname: name, avatar: avatar_url }
   );
   // generate token for client
-  return jwt.sign(
-    {
-      username: user.username,
-      email: user.email,
-      fullname: user.fullname,
-      avatar: user.avatar,
-    },
-    process.env.PRIVATE_KEY
-  );
+  return generateUserToken(user);
 };
