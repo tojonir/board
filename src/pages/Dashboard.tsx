@@ -1,4 +1,3 @@
-import Layout from "@containers/Layout";
 import { FC } from "react";
 import folder from "@assets/folder.png";
 import team from "@assets/team.png";
@@ -34,40 +33,36 @@ const Dashboard: FC = () => {
     },
   ];
   return (
-    <Layout>
-      <div className="p-5">
-        <div className="grid grid-cols-4 gap-4">
-          {headerData.map((data, i) => (
-            <div
-              key={i}
-              className="bg-white p-2 px-5 rounded-[3px] shadow-sm flex justify-between items-center"
-            >
-              <div className={`${data.bg} p-2 w-[50px] h-[50px] rounded-[50%]`}>
-                <img src={data.icon} alt="" className="w-full" />
-              </div>
-              <div className="text-right">
-                <p className="font-medium text-[30px] leading-8">
-                  {data.count}
-                </p>
-                <p className="text-gray-400 capitalize">{data.label}</p>
-              </div>
+    <div className="p-5">
+      <div className="grid grid-cols-4 gap-4">
+        {headerData.map((data, i) => (
+          <div
+            key={i}
+            className="bg-white p-2 px-5 rounded-[3px] shadow-sm flex justify-between items-center"
+          >
+            <div className={`${data.bg} p-2 w-[50px] h-[50px] rounded-[50%]`}>
+              <img src={data.icon} alt="" className="w-full" />
             </div>
-          ))}
+            <div className="text-right">
+              <p className="font-medium text-[30px] leading-8">{data.count}</p>
+              <p className="text-gray-400 capitalize">{data.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-2 gap-4 my-4">
+        <div className="bg-white rounded-[3px] shadow-sm">
+          <DashTable
+            title="team"
+            buttonLabel="new member"
+            header={["Profile", "Role", "Member since", "Action"]}
+          />
         </div>
-        <div className="grid grid-cols-2 gap-4 my-4">
-          <div className="bg-white rounded-[3px] shadow-sm">
-            <DashTable
-              title="team"
-              buttonLabel="new member"
-              header={["Profile", "Role", "Member since", "Action"]}
-            />
-          </div>
-          <div className="bg-white rounded-[3px] shadow-sm">
-            <DashTable />
-          </div>
+        <div className="bg-white rounded-[3px] shadow-sm">
+          <DashTable />
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

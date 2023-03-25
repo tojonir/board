@@ -10,6 +10,8 @@ export interface SideBarProps {}
 
 const SideBar: FC<SideBarProps> = () => {
   const navigate = useNavigate();
+  const activeLink = window.location.pathname.split("/")[2];
+  console.log(activeLink);
   const menu: { title: string; icon: IconDefinition }[] = [
     {
       title: "dashboard",
@@ -50,7 +52,9 @@ const SideBar: FC<SideBarProps> = () => {
             <Link
               key={m.title}
               to={`./${m.title}`}
-              className="flex items-center hover:bg-gray-100 rounded-[3px] p-1 py-2"
+              className={`flex items-center ${
+                activeLink === m.title && "bg-gray-100 text-green-500"
+              } hover:bg-gray-100 rounded-[3px] p-1 py-2`}
             >
               <FontAwesomeIcon icon={m.icon} className="text-[13px] w-[20px]" />
               <span className="ml-2 capitalize">{m.title}</span>

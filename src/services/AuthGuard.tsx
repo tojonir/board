@@ -1,14 +1,13 @@
 import { useQuery } from "@apollo/client";
+import Layout from "@containers/Layout";
 import { user, workspace } from "@graphql/cache";
 import { GET_WORKSPACE_BY_NAME } from "@graphql/query";
 import { FC, ReactNode } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, Outlet, useParams } from "react-router-dom";
 
-interface AuthGuardProps {
-  element: ReactNode;
-}
+interface AuthGuardProps {}
 
-const AuthGuard: FC<AuthGuardProps> = ({ element }) => {
+const AuthGuard: FC<AuthGuardProps> = () => {
   const query = useParams();
   const { loading, error, data } = useQuery(GET_WORKSPACE_BY_NAME, {
     variables: { name: query.workspace },
@@ -23,7 +22,17 @@ const AuthGuard: FC<AuthGuardProps> = ({ element }) => {
     );
     workspace(data.getWorkspaceByName);
   }
-  return <>{!!auth ? element : <Navigate to="/auth" />}</>;
+  return (
+    <>
+      {!!auth ? (
+        <Layout>
+          <Outlet />
+        </Layout>
+      ) : (
+        <Navigate to="/auth" />
+      )}
+    </>
+  );
 };
 
 export default AuthGuard;
