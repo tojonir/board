@@ -9,6 +9,7 @@ const {
 } = require("../services/auth.service");
 const { encrypt } = require("../services/bcrypt.service");
 const { findAndCreateUser } = require("../services/user.service");
+const jwt = require("jsonwebtoken");
 
 exports.github = async (req, res) => {
   if (req.query.code) {
@@ -64,9 +65,9 @@ exports.signup = async (req, res) => {
   await newUserInput
     .validate(req.body)
     .then(async () => {
-      const password = encrypt(req.body.password);
+      const password = await encrypt(req.body.password);
       const userData = { ...req.body, password };
-      const user = await findAndCreateUser(userData);
+      const user = await findAndCreateUser({ email: req.body.email }, userData);
       const token = jwt.sign(
         {
           username: user.username,
