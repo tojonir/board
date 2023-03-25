@@ -9,14 +9,13 @@ const formatUrl = (rootUrl, options) => {
   return `${rootUrl}?${query.toString()}`;
 };
 exports.login = async (email, password) => {
-  const response = {};
-  const user = await User.find({ email });
-  if (!user) response.error = "User not found";
+  const user = await User.findOne({ email });
+  if (!user) throw Error("User not found");
   if (password) {
     const checkPassword = await compare(password, user.password);
-    if (!checkPassword) response.error = "Wrong password";
+    if (!checkPassword) throw Error("Wrong password");
   }
-  return { ...response, user };
+  return user;
 };
 
 // google oauth
@@ -76,15 +75,7 @@ exports.logWithGoogle = async (code) => {
     { email, fullname: name, username: given_name, avatar: picture }
   );
   // generate token for client
-  return jwt.sign(
-    {
-      username: user.username,
-      email: user.email,
-      fullname: user.fullname,
-      avatar: user.avatar,
-    },
-    process.env.PRIVATE_KEY
-  );
+  return generateUserToken(user);
 };
 
 // github oauth
@@ -134,13 +125,5 @@ exports.logWithGithub = async (code) => {
     { username: login, email, fullname: name, avatar: avatar_url }
   );
   // generate token for client
-  return jwt.sign(
-    {
-      username: user.username,
-      email: user.email,
-      fullname: user.fullname,
-      avatar: user.avatar,
-    },
-    process.env.PRIVATE_KEY
-  );
+  return generateUserToken(user);
 };
