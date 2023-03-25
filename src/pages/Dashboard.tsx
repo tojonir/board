@@ -4,25 +4,33 @@ import team from "@assets/team.png";
 import task from "@assets/task.png";
 import bug from "@assets/bug.png";
 import DashTable from "@containers/DashTable";
+import { useQuery } from "@apollo/client";
+import { GET_WORKSPACE_DATA } from "@graphql/query";
+import { workspace } from "@graphql/cache";
 
 const Dashboard: FC = () => {
+  const currentWorkspace = workspace();
+  const { loading, data } = useQuery(GET_WORKSPACE_DATA, {
+    variables: { id: currentWorkspace.id },
+  });
+
   const headerData = [
     {
       icon: folder,
       label: "project",
-      count: 3,
+      count: data ? data.getWorkspaceById.sumup.project : 0,
       bg: "bg-blue-100",
     },
     {
       icon: team,
       label: "team",
-      count: 10,
+      count: data ? data.getWorkspaceById.sumup.team : 0,
       bg: "bg-green-100",
     },
     {
       icon: task,
       label: "task",
-      count: 5,
+      count: 0,
       bg: "bg-orange-100",
     },
     {
@@ -32,6 +40,20 @@ const Dashboard: FC = () => {
       bg: "bg-red-100",
     },
   ];
+
+  if (loading) return <p>loading ...</p>;
+
+  const teamData =
+    data &&
+    data.getWorkspaceById.project
+      .filter((t: any) => t.team.length > 0)
+      .map((t: any) => {
+        const row = t.team.map((t: any) => {
+          return [t.info.username, "developer", "10/01/23", "delete"];
+        });
+        return row;
+      });
+
   return (
     <div className="p-5">
       <div className="grid grid-cols-4 gap-4">
@@ -55,7 +77,8 @@ const Dashboard: FC = () => {
           <DashTable
             title="team"
             buttonLabel="new member"
-            header={["Profile", "Role", "Member since", "Action"]}
+            header={["Profile", "Role", "created_at", "Action"]}
+            data={teamData[0]}
           />
         </div>
         <div className="bg-white rounded-[3px] shadow-sm">

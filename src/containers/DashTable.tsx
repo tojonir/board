@@ -36,7 +36,7 @@ const DashTable: FC<DashTableProps> = ({
             {data?.map((r, i) => (
               <tr key={i}>
                 {r.map((c: any, i: number) => (
-                  <td key={i} className="text-left font-normal p-2">
+                  <td key={i} className="text-left font-normal p-2 capitalize">
                     {c}
                   </td>
                 ))}
